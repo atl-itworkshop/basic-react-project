@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
-axios
+const App = () => {
+
+  let [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios
     .get("http://localhost:5001/api/v1/products")
     .then(resp => {
         return resp.data;
     })
     .then(response => {
-        console.log(response.data);
+        // data = response.data;
+        setData(response.data)
     })
+  }, [data])
 
-const App = () => {
   return (
     <div>
       Basic React Application with Node
+      <div>
+        {JSON.stringify(data)}
+      </div>
     </div>
   );
 }
