@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
+import { ProductCard } from "./ProductCard";
+
 const App = () => {
 
   let [data, setData] = useState([]);
@@ -12,16 +14,16 @@ const App = () => {
         return resp.data;
     })
     .then(response => {
-        // data = response.data;
         setData(response.data)
     })
-  }, [data])
+  }, [])
 
   return (
     <div>
-      Basic React Application with Node
       <div>
-        {JSON.stringify(data)}
+        {data.map((product, index) => {
+          return <ProductCard key={product._id} product={product} /> 
+        })}
       </div>
     </div>
   );
