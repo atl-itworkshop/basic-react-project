@@ -63,8 +63,8 @@ const App = () => {
         })}
       </div>
       <div>
-        <button onClick={addProduct}>
-          Add a Product
+        <button style={styles.addProductStyles} onClick={addProduct}>
+          +
         </button>
       </div>
     </div>
@@ -72,3 +72,14 @@ const App = () => {
 };
 
 export default App;
+
+const styles = {
+  addProductStyles: {
+    borderRadius: "50%",
+    fontSize: "24px",
+    cursor: "pointer",
+    border: "none",
+    width: "50px",
+    height: "50px"
+  }
+}
