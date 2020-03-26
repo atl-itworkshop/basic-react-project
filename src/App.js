@@ -63,12 +63,24 @@ const App = () => {
         })}
       </div>
       <div>
-        <button onClick={addProduct}>
+        <button onClick={addProduct} style={styles.btnAddStyle}>
           Add a Product
         </button>
       </div>
     </div>
   );
 };
+
+const styles = {
+  btnAddStyle : {
+    background: '#043927',
+    color: '#fff',
+    border: '1px solid',
+    margin: '10px',
+    padding: '10px',
+    cursor: 'pointer'
+  }
+};
+
 
 export default App;

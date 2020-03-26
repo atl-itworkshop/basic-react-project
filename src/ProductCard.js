@@ -9,7 +9,7 @@ export const ProductCard = ({ product, deleteProduct }) => {
           onClick={() => {
             deleteProduct(product._id);
           }}
-        >
+          style={styles.btnStyle}>
           X
         </button>
       </header>
@@ -35,7 +35,7 @@ const styles = {
   },
   productTitle: {
     background: "yellow",
-    fontSize: "36px",
+    fontSize: "24px",
     textTransform: "uppercase",
     padding: "5px"
   },
@@ -45,6 +45,22 @@ const styles = {
     width: "20px",
     border: "1px solid black",
     display: "inline-block"
+  },
+  btnStyle : {
+    background: '#ff0000',
+    color: '#fff',
+    border: 'none',
+    padding: '5px 9px',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    float: 'right'
+  },
+  btnAddStyle : {
+    background: '#043927',
+    color: '#fff',
+    border: '1px solid',
+    padding: '5px',
+    cursor: 'pointer'
   }
 };
 
