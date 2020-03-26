@@ -1,12 +1,24 @@
 import React from "react";
+import axios from "axios";
 
-export const ProductCard = ({ product }) => {
+export const ProductCard = ({ product, deleteProduct }) => {
   return (
     <div style={styles.productTile}>
-    <header style={styles.productTitle}>{product.title}</header>
+      <header style={styles.productTitle}>
+        {product.title}{" "}
+        <button
+          onClick={() => {
+            deleteProduct(product._id);
+          }}
+        >
+          X
+        </button>
+      </header>
       <div> Type: {product.type}</div>
       <div>Gender: {product.gender}</div>
-      <div>Color: <div style={getColorStyle(product.color)}></div></div>
+      <div>
+        Color: <div style={getColorStyle(product.color)}></div>
+      </div>
       <div>Price: ${product.price}</div>
       <div>Company: {product.company}</div>
     </div>
@@ -23,10 +35,10 @@ const styles = {
     width: "300px"
   },
   productTitle: {
-      background: "yellow",
-      fontSize: "36px",
-      textTransform: "uppercase",
-      padding: "5px"
+    background: "yellow",
+    fontSize: "36px",
+    textTransform: "uppercase",
+    padding: "5px"
   },
   colorButtonStyles: {
     borderRadius: "50%",
@@ -37,9 +49,9 @@ const styles = {
   }
 };
 
-const getColorStyle = (color) => {
-    return {
-        ...styles.colorButtonStyles,
-        background: color
-    }
-}
+const getColorStyle = color => {
+  return {
+    ...styles.colorButtonStyles,
+    background: color
+  };
+};
