@@ -7,9 +7,29 @@ const App = () => {
   let [data, setData] = useState([]);
 
   const deleteProduct = id => {
-    console.log("product deleted..."+id);
+    console.log("product deleted..." + id);
     axios
       .delete(`http://localhost:5001/api/v1/products/${id}`)
+      .then(resp => {
+        return resp.data;
+      })
+      .then(response => {
+        setData(response.data);
+      });
+  };
+
+  const addProduct = () => {
+    console.log("product added..");
+    axios
+      .post(`http://localhost:5001/api/v1/products` , {
+          price: 10000,
+          color: "green",
+          type: "T-Shirt",
+          gender: "male",
+          title: "Long Bottom",
+          company: "ABC Inc.",
+          about: "Lets Buy"
+      })
       .then(resp => {
         return resp.data;
       })
@@ -41,6 +61,11 @@ const App = () => {
             />
           );
         })}
+      </div>
+      <div>
+        <button onClick={addProduct}>
+          Add a Product
+        </button>
       </div>
     </div>
   );
