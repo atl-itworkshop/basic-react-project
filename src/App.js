@@ -14,7 +14,7 @@ const App = () => {
          ? "http://localhost:5000"
          : "https://tranquil-headland-85776.herokuapp.com"; */
 
-   const baseUrl = process.env.HOSTED_URL || "http://localhost:5000";
+   const baseUrl = process.env.REACT_APP_HOSTED_URL || "http://localhost:5000";
 
    const deleteProduct = async id => {
       console.log("product deleted..." + id);
@@ -41,7 +41,7 @@ const App = () => {
 
    useEffect(() => {
       const getProducts = async () => {
-         console.log("Hosted URL is " + process.env.HOSTED_URL);
+         console.log("Hosted URL is " + process.env.REACT_APP_HOSTED_URL);
 
          const res = await axios.get(`${baseUrl}/api/v1/products`);
          setData(res.data.data);
