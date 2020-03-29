@@ -41,6 +41,8 @@ const App = () => {
 
    useEffect(() => {
       const getProducts = async () => {
+         console.log("Hosted URL is " + process.env.HOSTED_URL);
+
          const res = await axios.get(`${baseUrl}/api/v1/products`);
          setData(res.data.data);
       };
