@@ -18,7 +18,7 @@ export const ProductCard = ({ product, deleteProduct }) => {
                onClick={() => {
                   deleteProduct(product._id);
                }}
-               className="btnStyle"
+               className="btnDeleteStyle"
             >
                X
             </button>
