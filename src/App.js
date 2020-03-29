@@ -8,12 +8,6 @@ import "./App.css";
 const App = () => {
    let [data, setData] = useState([]);
 
-   // Add your hosted URL here...
-   /* let baseUrl =
-      process.env.NODE_ENV !== "production"
-         ? "http://localhost:5000"
-         : "https://tranquil-headland-85776.herokuapp.com"; */
-
    const baseUrl = process.env.REACT_APP_HOSTED_URL || "http://localhost:5000";
 
    const deleteProduct = async id => {
