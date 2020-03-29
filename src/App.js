@@ -3,24 +3,24 @@ import axios from "axios";
 
 import { ProductCard } from "./ProductCard";
 
+import './App.css';
+
+
 const App = () => {
    let [data, setData] = useState([]);
 
-   const deleteProduct = id => {
+   const deleteProduct = async (id) => {
       console.log("product deleted..." + id);
-      axios
-         .delete(`http://localhost:5001/api/v1/products/${id}`)
-         .then(resp => {
-            return resp.data;
-         })
-         .then(response => {
-            setData(response.data);
-         });
+
+      const res = await axios.delete(`http://localhost:5001/api/v1/products/${id}`);
+      setData(res.data.data);
+
    };
 
-   const addProduct = () => {
+   const addProduct = async () => {
       console.log("product added..");
-      axios
+      
+      const res = await axios
          .post(`http://localhost:5001/api/v1/products`, {
             price: 10000,
             color: "green",
@@ -29,24 +29,21 @@ const App = () => {
             title: "Long Bottom",
             company: "ABC Inc.",
             about: "Lets Buy"
-         })
-         .then(resp => {
-            return resp.data;
-         })
-         .then(response => {
-            setData(response.data);
          });
+
+      setData(res.data.data);
+         
    };
 
    useEffect(() => {
-      axios
-         .get("http://localhost:5001/api/v1/products")
-         .then(resp => {
-            return resp.data;
-         })
-         .then(response => {
-            setData(response.data);
-         });
+      
+      const getProducts = async () => {
+         const res = await axios.get(`http://localhost:5001/api/v1/products`);
+         setData(res.data.data);
+      }
+      
+      getProducts();
+
    }, []);
 
    return (
@@ -63,7 +60,7 @@ const App = () => {
             })}
          </div>
          <div>
-            <button onClick={addProduct} style={styles.btnAddStyle}>
+            <button onClick={addProduct} className="btnAddStyle">
                Add a Product
             </button>
          </div>
@@ -71,15 +68,6 @@ const App = () => {
    );
 };
 
-const styles = {
-   btnAddStyle: {
-      background: "#043927",
-      color: "#fff",
-      border: "1px solid",
-      margin: "10px",
-      padding: "10px",
-      cursor: "pointer"
-   }
-};
+
 
 export default App;
