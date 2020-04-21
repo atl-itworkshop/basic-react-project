@@ -1,70 +1,28 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PrivateRoute from "./components/routing/PrivateRoute";
 
-import { ProductCard } from "./ProductCard";
+import Home from "./components/pages/Home";
+import AuthState from "./context/auth/AuthState";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+import Navbar from "./components/layout/Navbar";
 
 import "./App.css";
 
 const App = () => {
-   let [data, setData] = useState([]);
-
-   const baseUrl = process.env.REACT_APP_HOSTED_URL || "http://localhost:5000";
-
-   const deleteProduct = async id => {
-      console.log("product deleted..." + id);
-
-      const res = await axios.delete(`${baseUrl}/api/v1/products/${id}`);
-      setData(res.data.data);
-   };
-
-   const addProduct = async () => {
-      console.log("product added..");
-
-      const res = await axios.post(`${baseUrl}/api/v1/products`, {
-         price: 10000,
-         color: "green",
-         type: "T-Shirt",
-         gender: "male",
-         title: "Long Bottom",
-         company: "ABC Inc.",
-         about: "Lets Buy"
-      });
-
-      setData(res.data.data);
-   };
-
-   useEffect(() => {
-      const getProducts = async () => {
-         console.log("Hosted URL is " + process.env.REACT_APP_HOSTED_URL);
-
-         const res = await axios.get(`${baseUrl}/api/v1/products`);
-         setData(res.data.data);
-      };
-
-      getProducts();
-
-      //eslint-disable-next-line
-   }, []);
 
    return (
-      <div>
-         <div>
-            {data.map(product => {
-               return (
-                  <ProductCard
-                     key={product._id}
-                     product={product}
-                     deleteProduct={deleteProduct}
-                  />
-               );
-            })}
-         </div>
-         <div>
-            <button onClick={addProduct} className="btnAddStyle">
-               Add a Product
-            </button>
-         </div>
-      </div>
+      <AuthState>
+         <Router>
+            <Navbar />
+            <Switch>
+               <PrivateRoute exact path="/" component={Home} />
+               <Route exact path="/register" component={Register} />
+               <Route exact path="/login" component={Login} />
+            </Switch>
+         </Router>
+      </AuthState>
    );
 };
 
