@@ -3,6 +3,10 @@ import { ProductCard } from "./ProductCard";
 
 import axios from "axios";
 
+axios.defaults.headers.put["Authorization"] = `Bearer ${localStorage.token}`;
+axios.defaults.headers.post["Authorization"] = `Bearer ${localStorage.token}`;
+axios.defaults.headers.delete["Authorization"] = `Bearer ${localStorage.token}`;
+
 const Home = () => {
    let [data, setData] = useState([]);
 
@@ -17,16 +21,12 @@ const Home = () => {
       getProducts();
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
-
-   const config = {
-      headers: { Authorization: `Bearer ${localStorage.token}` },
-   };
+   }, []); 
 
    const deleteProduct = async (id) => {
       console.log("product deleted..." + id);
 
-      const res = await axios.delete(`${baseUrl}/api/v2/products/${id}`, config);
+      const res = await axios.delete(`${baseUrl}/api/v2/products/${id}`);
       setData(res.data.data);
    };
 
@@ -41,7 +41,7 @@ const Home = () => {
          title: "Long Bottom",
          company: "ABC Inc.",
          about: "Lets Buy",
-      }, config);
+      });
 
       setData(res.data.data);
    };
