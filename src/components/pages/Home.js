@@ -3,9 +3,9 @@ import { ProductCard } from "./ProductCard";
 
 import axios from "axios";
 
-axios.defaults.headers.put["Authorization"] = `Bearer ${localStorage.token}`;
+/* axios.defaults.headers.put["Authorization"] = `Bearer ${localStorage.token}`;
 axios.defaults.headers.post["Authorization"] = `Bearer ${localStorage.token}`;
-axios.defaults.headers.delete["Authorization"] = `Bearer ${localStorage.token}`;
+axios.defaults.headers.delete["Authorization"] = `Bearer ${localStorage.token}`; */
 
 const Home = () => {
    let [data, setData] = useState([]);
@@ -21,27 +21,38 @@ const Home = () => {
       getProducts();
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []); 
+   }, []);
+
+   const config = {
+      headers: { Authorization: `Bearer ${localStorage.token}` },
+   };
 
    const deleteProduct = async (id) => {
       console.log("product deleted..." + id);
 
-      const res = await axios.delete(`${baseUrl}/api/v2/products/${id}`);
+      const res = await axios.delete(
+         `${baseUrl}/api/v2/products/${id}`,
+         config
+      );
       setData(res.data.data);
    };
 
    const addProduct = async () => {
       console.log("product added..");
 
-      const res = await axios.post(`${baseUrl}/api/v2/products`, {
-         price: 10000,
-         color: "green",
-         type: "T-Shirt",
-         gender: "male",
-         title: "Long Bottom",
-         company: "ABC Inc.",
-         about: "Lets Buy",
-      });
+      const res = await axios.post(
+         `${baseUrl}/api/v2/products`,
+         {
+            price: 10000,
+            color: "green",
+            type: "T-Shirt",
+            gender: "male",
+            title: "Long Bottom",
+            company: "ABC Inc.",
+            about: "Lets Buy",
+         },
+         config
+      );
 
       setData(res.data.data);
    };
