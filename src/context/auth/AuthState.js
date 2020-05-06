@@ -4,12 +4,18 @@ import authReducer from "./authReducer";
 
 import axios from "axios";
 
-import { REGISTER, LOGIN, LOGOUT, AUTH_ERROR } from "../types";
+import {
+   REGISTER,
+   LOGIN,
+   LOGOUT,
+   FACEBOOK_RESPONSE,
+   AUTH_ERROR,
+} from "../types";
 
 const AuthState = (props) => {
    const initialState = {
       token: localStorage.getItem("token"),
-      isAuthenticated: false
+      isAuthenticated: false,
    };
 
    const [state, dispatch] = useReducer(authReducer, initialState);
@@ -70,6 +76,44 @@ const AuthState = (props) => {
       }
    };
 
+   // Facebook callback
+   const fbResponse = async (response) => {
+      // Call NodeJs backend API to retrieve JWT Token
+      console.log(response);
+
+      const config = {
+         headers: {
+            "Content-Type": "application/json",
+         },
+      };
+
+      const payload = {
+         access_token: response.accessToken,
+      };
+
+      try {
+
+         console.log("Calling axios post...");
+
+         const res = await axios.post(
+            `${baseUrl}/api/v2/auth/facebook`,
+            payload,
+            config
+         );
+
+         console.log("Calling dispatch...");
+         dispatch({
+            type: FACEBOOK_RESPONSE,
+            payload: res.data,
+         });
+      } catch (error) {
+         dispatch({
+            type: AUTH_ERROR,
+            payload: error,
+         });
+      }
+   };
+
    // Logout
    const logout = () => dispatch({ type: LOGOUT });
 
@@ -81,6 +125,7 @@ const AuthState = (props) => {
             register,
             login,
             logout,
+            fbResponse,
          }}
       >
          {props.children}

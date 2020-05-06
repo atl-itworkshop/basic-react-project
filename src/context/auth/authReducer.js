@@ -1,9 +1,16 @@
-import { REGISTER, LOGIN, LOGOUT, AUTH_ERROR } from "../types";
+import {
+   REGISTER,
+   LOGIN,
+   LOGOUT,
+   AUTH_ERROR,
+   FACEBOOK_RESPONSE,
+} from "../types";
 
 export default (state, action) => {
    switch (action.type) {
       case REGISTER:
       case LOGIN:
+      case FACEBOOK_RESPONSE:
          localStorage.setItem("token", action.payload.token);
          return {
             ...state,
